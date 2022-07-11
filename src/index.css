@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.step-border{
+    @apply relative after:absolute after:w-[26px] after:h-[1px] after:bg-primary after:left-[-26px]
+}
