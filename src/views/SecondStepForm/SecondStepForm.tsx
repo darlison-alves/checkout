@@ -106,7 +106,7 @@ const SecondStepForm = () => {
     <>
     <img src={imgExample} className="max-w-full md:max-w-[830px] w-full mx-auto" alt="imagem do produto" />
 
-    <form onSubmit={handleSubmit} className="bg-white max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md">
+    <form onSubmit={handleSubmit} className="bg-white max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md shadow-sm">
         <StepsTitle step="3" title="Pagamento" />
 
         <p className="text-base font-light my-3">

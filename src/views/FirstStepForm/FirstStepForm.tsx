@@ -142,7 +142,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
 
   return (
     <>
-    <img src={imgExample} className="max-w-full md:max-w-[830px] w-full mx-auto" alt="imagem do produto" />
+    <img src={imgExample} className="max-w-full md:max-w-[830px] w-full mx-auto shadow-sm" alt="imagem do produto" />
     <form onSubmit={goToNextStep} className="bg-white max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md">
       <section>
         <StepsTitle step="1" title="Dados pessoais" />
@@ -188,6 +188,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
             onChange={getCellPhoneInputValue}
             type="text"
             value={phone}
+            placeholder="(__) _____-____"
           />
         </div>
       </section>
@@ -284,10 +285,10 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
 
         <section className="mt-7 flex md:flex-row flex-col items-center justify-between gap-4">
           <div className="flex text-primary items-center gap-3">
-            <HiLockClosed size={15}/>
-            <p className="text-base font-normal">Você está em uma página criptografada de ponta a ponta</p>
+            <HiLockClosed size={30}/>
+            <p className="text-base font-normal">Você está em uma página segura</p>
           </div>
-          <div className="max-w-[300px] w-full">
+          <div className="md:max-w-[300px] w-full">
           <Button type="submit" text="Continuar"/>
           </div>
         </section>

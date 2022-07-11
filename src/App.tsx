@@ -9,7 +9,7 @@ import {
 import {Thanks} from './views/Thanks/Thanks';
 
 function App() {
-  const [isFirstStepForm, setIsFirstStepForm] = useState(true)
+  const [isFirstStepForm, setIsFirstStepForm] = useState(false)
 
 
   return (
