@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import {Thanks} from './views/Thanks/Thanks';
 
 function App() {
   const [isFirstStepForm, setIsFirstStepForm] = useState(true)
@@ -20,7 +21,7 @@ function App() {
           </main>
         } />
 
-        <Route path="/obrigado" element={<h1>Obrigado</h1>}/>
+        <Route path="/obrigado" element={<Thanks />}/>
   
       </Routes>
 

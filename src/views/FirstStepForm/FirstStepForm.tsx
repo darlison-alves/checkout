@@ -11,7 +11,7 @@ import { FirstStepFormProps } from "./FirstStepForm.types";
 import { validateMaskedInput } from "../../utils/validateMaskedInput";
 import { useUpdateFirstFormData } from "../../context/FormContext";
 import { statesOption } from "../../utils/optionsData";
-
+import imgExample from '../../assets/topo.png'
 
 const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
   //states for error
@@ -141,7 +141,9 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
 
 
   return (
-    <form onSubmit={goToNextStep} className="bg-white max-w-full md:max-w-[830px] w-full mx-auto p-5 overflow-x-hidden rounded-md">
+    <>
+    <img src={imgExample} className="max-w-full md:max-w-[830px] w-full mx-auto" alt="imagem do produto" />
+    <form onSubmit={goToNextStep} className="bg-white max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md">
       <section>
         <StepsTitle step="1" title="Dados pessoais" />
 
@@ -291,6 +293,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
         </section>
       </section>
     </form>
+    </>
   );
 };
 
