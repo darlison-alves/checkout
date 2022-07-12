@@ -12,6 +12,8 @@ import { validateMaskedInput } from "../../utils/validateMaskedInput";
 import { useUpdateFirstFormData } from "../../context/FormContext";
 import { statesOption } from "../../utils/optionsData";
 import imgExample from '../../assets/topo.png'
+import {useParams} from 'react-router-dom'
+import { api } from "../../services/api";
 
 const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
   //states for error
@@ -29,9 +31,12 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
   const [district, setDistrict] = useState('')
   const [city, setCity] = useState('')
   const [state, setState] = useState('Estado')
+  const [cpf, setCpf] = useState('')
+  const [codeIBGE, setCodeIBGE] = useState('')
 
 
   const updateFirstFormData = useUpdateFirstFormData()
+  const {id} = useParams()
 
 
   const checkForErrors = (error:string) =>{
@@ -56,6 +61,17 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
       setErrors(currState => [...currState, 'email'])
     }
     setEmail(e.target.value)
+  }
+
+  const getCpfValue = (e:React.ChangeEvent<HTMLInputElement>) =>{
+    if(validateMaskedInput(e.target.value)){
+      setErrors(currState => {
+       return currState.filter(err => err !== 'cpf')
+      })
+    }else{
+      setErrors(currState => [...currState, 'cpf'])
+    }
+    setCpf(e.target.value)
   }
 
   const getCellPhoneInputValue = (e:React.ChangeEvent<HTMLInputElement>) =>{
@@ -103,6 +119,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
       setDistrict(response.data.bairro)
       setCity(response.data.localidade)
       setState(response.data.uf)
+      setCodeIBGE(response.data.ibge)
 
       setIsCepDefined(true)
 
@@ -112,7 +129,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
    
   }
 
-  const goToNextStep = (e:React.FormEvent) =>{
+  const goToNextStep = async (e:React.FormEvent) =>{
     e.preventDefault()
     if(state === 'Estado'){
       setErrors(currState => [...currState, 'state'])
@@ -134,9 +151,42 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
       state
     }
 
+        
+    let userInfo = {
+      "nome": `${firstName} ${lastName}`,
+      "email": email,
+      "cpf": cpf,
+      "telefone":phone,
+      "planoId": id
+    }
+
+    console.log(userInfo)
+
+    let addressInfo = {
+      "logradouro": address,
+      "bairro": district,
+      "cidade": city,
+      "estado": state,
+      "codeIBGE": codeIBGE
+    }
+
+    try{
+     const userSignupInfo = await axios.post('https://api.ibigboss.link/api/auth/signup',{
+       headers: {'Content-Type': 'application/json'}, 
+       body:JSON.stringify(userInfo)
+     })
+     console.log(userSignupInfo)
+    
+    //  const addressUserInfo = await api.post(`/address/${userId}/me`)
+
     console.log(dataFromForm)
     updateFirstFormData(dataFromForm)
-    nextStepForm()
+    // nextStepForm()
+    }catch(err:any){
+      console.error(err.message)
+    }
+
+    
   }
 
 
@@ -165,7 +215,20 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
           placeholder="Seu e-mail"
           type="Email"
           onChange={getEmailInputValue}
+          focusPlaceholder="E-mail"
         />
+
+        <div className="mt-3">
+          <MaskedInput
+            error={checkForErrors('cpf')}
+            mask="999.999.999-99"
+            placeholder='CPF'
+            onChange={getCpfValue} 
+            type="text"
+            value={cpf}
+            focusPlaceholder="CPF"
+          />
+          </div>
 
         <div className="grid md:grid-cols-3 grid-cols-1 my-4 gap-4">
           <Input
@@ -173,6 +236,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
             type="text"
             onChange={(e) => setFirstName(e.target.value)}
             value={firstName}
+            focusPlaceholder="Seu Nome"
           />
 
           <Input
@@ -180,6 +244,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
             type="text"
             onChange={(e) => setLastName(e.target.value)}
             value={lastName}
+            focusPlaceholder="Seu sobrenome"
           />
 
           <MaskedInput
@@ -189,6 +254,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
             type="text"
             value={phone}
             placeholder="(__) _____-____"
+            focusPlaceholder="Telefone"
           />
         </div>
       </section>
@@ -216,6 +282,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
             onChange={handleAutoCompleteAddress}
             value={cep}
             type="text"
+            focusPlaceholder="CEP"
           />
         </div>
 
@@ -229,15 +296,17 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
               type="text"
               onChange={(e) => setAddress(e.target.value)}
               value={address}
+              focusPlaceholder="Endereço"
           />
           </div>
         
-          <div className="md:max-w-[242px] w-full">
+          <div className="md:max-w-[270px] w-full">
           <Input
               placeholder="Número"
               type="text"
               onChange={(e) => setNumber(e.target.value)}
               value={number}
+              focusPlaceholder="Número"
           />
           </div>
 
@@ -249,12 +318,15 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
               type="text"
               onChange={(e) => setComplement(e.target.value)}
               value={complement}
+              focusPlaceholder="Complemento"
+              required={false}
           />
           <Input
               placeholder="Bairro"
               type="text"
               onChange={(e) => setDistrict(e.target.value)}
               value={district}
+              focusPlaceholder="Bairro"
           />
           </div>
 
@@ -265,6 +337,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
               type="text"
               onChange={(e) => setCity(e.target.value)}
               value={city}
+              focusPlaceholder="Cidade"
           />
           <select value={state} onChange={getSelectValue} className={`px-3 py-3 text-base font-semibold text-secondary border rounded-[4px] w-full placeholder:text-secondary transition-colors placeholder:text-base focus:outline-none focus:ring-2  
           ${checkForErrors('state') ? 'border-red-700 focus:ring-red-700' : 'border-[#CED4DA] focus:ring-primary'}`}

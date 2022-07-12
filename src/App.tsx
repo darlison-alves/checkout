@@ -7,9 +7,10 @@ import {
   Route,
 } from "react-router-dom";
 import {Thanks} from './views/Thanks/Thanks';
+import SecondStepFormModel from './views/SecondStepFormModel/SecondStepFormModel';
 
 function App() {
-  const [isFirstStepForm, setIsFirstStepForm] = useState(false)
+  const [isFirstStepForm, setIsFirstStepForm] = useState(true)
 
 
   return (
@@ -17,7 +18,7 @@ function App() {
       <Routes>
         <Route path='/checkout/:id' element={
           <main className="App min-h-screen flex justify-center flex-col items-center bg-[#F5F5F5]">
-          {isFirstStepForm ? <FirstStepForm nextStepForm={() => setIsFirstStepForm(false)}/> : <SecondStepForm />}
+          {isFirstStepForm ? <FirstStepForm nextStepForm={() => setIsFirstStepForm(false)}/> : <SecondStepForm/>}
           </main>
         } />
 

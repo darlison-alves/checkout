@@ -6,14 +6,20 @@ import { Input } from '../../components/Input/Input';
 import { MaskedInput } from '../../components/InputMask/InputMask';
 import { validateMaskedInput } from '../../utils/validateMaskedInput';
 import { FaRegCreditCard } from "react-icons/fa";
+import {BiChevronLeft} from 'react-icons/bi'
+import {BsCheck2} from 'react-icons/bs'
+import {IoAlert} from 'react-icons/io5'
 import { Button } from '../../components/Button/Button';
 import { useFirstFormData } from '../../context/FormContext';
 import { expiryOption, yearOption } from '../../utils/optionsData';
 import { useNavigate } from "react-router-dom";
 import imgExample from '../../assets/topo.png'
+import AccordionMUI from '../../components/AccordionMUI/AccordionMUI';
 
-const SecondStepForm = () => {
+
+const SecondStepFormModel = () => {
   const firstFormData = useFirstFormData()
+  const [accordion, setAccordion] = useState('cartão')
 
   const [errors, setErrors] = useState<string[]>([])
   const [focus, setFocus] = useState('name')
@@ -97,7 +103,6 @@ const SecondStepForm = () => {
       ...firstFormData
     }
 
-
     console.log(raw)
 
     navigate('/obrigado',{replace:true})
@@ -108,12 +113,8 @@ const SecondStepForm = () => {
     <img src={imgExample} className="max-w-full md:max-w-[830px] w-full mx-auto" alt="imagem do produto" />
 
     <form onSubmit={handleSubmit} className="bg-white max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md shadow-sm">
-        <StepsTitle step="3" title="Pagamento" />
 
-        <p className="text-base font-light my-3">
-        Digite as informações de cobrança para finalizar a assinatura.
-        </p>
-
+        <AccordionMUI onClick={() => setAccordion('cartão')} expanded={accordion === 'cartão' ? true : false} accStep="1" accTitle="Pagar com cartão">
         <section className="grid md:grid-cols-2 gap-4 mt-5">
         <Cards
           cvc={cvv}
@@ -162,7 +163,7 @@ const SecondStepForm = () => {
           <MaskedInput
             error={checkForErrors('cpf')}
             mask="999.999.999-99"
-            placeholder='CPF'
+            placeholder='___.___.___-__'
             onChange={getCpfValue} 
             type="text"
             value={cpf}
@@ -212,11 +213,62 @@ const SecondStepForm = () => {
             <Button text='FINALIZAR COMPRA' type='submit'/>
             </div>
         </div>
-
         </section>
+        </AccordionMUI>
+
+        <AccordionMUI onClick={() => setAccordion('boleto')} expanded={accordion === 'boleto' ? true : false} accStep="2" accTitle="Pagar com boleto">
+            <p className="font-bold text-base text-black/75 flex items-center gap-2 mb-4">
+                <IoAlert/>
+                Informações sobre o pagamento via boleto
+            </p>
+            <div className='md:max-w-[50%]'>
+            <MaskedInput
+            error={checkForErrors('cpf')}
+            mask="999.999.999-99"
+            placeholder='___.___.___-__'
+            onChange={getCpfValue} 
+            type="text"
+            value={cpf}
+            focusPlaceholder="CPF"
+          />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+                <button type="button" onClick={() => setAccordion('cartão')} className="bg-white border border-primary uppercase text-primary text-base font-normal py-3 w-full flex gap-2 items-center justify-center rounded-md">
+                    <BiChevronLeft size={20}/>
+                    Voltar para cartão
+                </button>
+                <button className="bg-primary uppercase text-white text-base font-normal py-3 w-full flex gap-3 items-center justify-center rounded-md">
+                    <BsCheck2 size={20}/>
+                    Gerar boleto
+                </button>
+            </div>
+        </AccordionMUI>
+
+        <AccordionMUI onClick={() => setAccordion('pix')} expanded={accordion === 'pix' ? true : false} accStep="3" accTitle="Pagar com pix">
+          <p><b>Produtos</b>: R$ 397,00</p>
+          <p><b>Frete</b>: R$ 0,00</p>
+          <hr className="my-2"/>
+          <p><b>Total</b>: R$ 397,00</p>
+
+          <label className="block my-2 text-sm">CPF (Para emissão da Nota Fiscal)</label>
+          <MaskedInput
+            error={checkForErrors('cpf')}
+            mask="999.999.999-99"
+            placeholder='___.___.___-__'
+            onChange={getCpfValue} 
+            type="text"
+            value={cpf}
+            focusPlaceholder="CPF"
+          />
+
+          <button className="bg-primary uppercase text-white text-base font-normal py-3 w-full text-center rounded-md mt-5">
+                    Gerar boleto
+          </button>
+        </AccordionMUI>
     </form>
     </>
   )
 }
 
-export default SecondStepForm
+export default SecondStepFormModel

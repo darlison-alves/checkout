@@ -9,3 +9,15 @@
 .step-border{
     @apply relative after:absolute after:w-[26px] after:h-[1px] after:bg-primary after:left-[-26px]
 }
+
+.isFocus:focus + span{
+    @apply opacity-100 mb-1
+}
+
+.isFocus:invalid {
+    @apply ring-red-700
+}
+
+.isFocus:invalid + span{
+    @apply text-red-700
+}
