@@ -10,7 +10,7 @@ import {Thanks} from './views/Thanks/Thanks';
 import SecondStepFormModel from './views/SecondStepFormModel/SecondStepFormModel';
 
 function App() {
-  const [isFirstStepForm, setIsFirstStepForm] = useState(false)
+  const [isFirstStepForm, setIsFirstStepForm] = useState(true)
 
 
   return (
