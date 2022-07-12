@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { StepsTitle } from '../../components/StepsTitle/StepsTitle'
-import Cards from 'react-credit-cards';
+import Cards, { Focused } from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import { Input } from '../../components/Input/Input';
 import { MaskedInput } from '../../components/InputMask/InputMask';
@@ -22,7 +22,7 @@ const SecondStepFormModel = () => {
   const [accordion, setAccordion] = useState('cartão')
 
   const [errors, setErrors] = useState<string[]>([])
-  const [focus, setFocus] = useState('name')
+  const [focus, setFocus] = useState<Focused>('name')
   const [cardNumber, setCardNumber] = useState('')
   const [name, setName] = useState('')
   const [cpf, setCpf] = useState('')
@@ -33,8 +33,20 @@ const SecondStepFormModel = () => {
   const navigate = useNavigate()
 
   const handleInputFocus = (e:React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
-    setFocus(e.target.name);
+    if(e.target.name === 'name'){
+      setFocus('name')
+    }
+    if(e.target.name === 'number'){
+      setFocus('number')
+    }
+    if(e.target.name === 'expiry'){
+      setFocus('expiry')
+    }
+    if(e.target.name === 'cvc'){
+      setFocus('cvc')
+    }
   }
+
 
 
   const checkForErrors = (error:string) =>{
