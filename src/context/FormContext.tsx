@@ -5,21 +5,11 @@ interface FormProviderProps {
 }
 
 interface firstFormDataProps {
-    email:string
-    firstName:string
-    lastName:string
-    phone:string
-    cep:string
-    address:string
-    number:string
-    complement:string
-    district:string
-    city:string
-    state:string
+    id:string
 }
 
 
-const FormContext = createContext({})
+const FormContext = createContext({} as firstFormDataProps)
 
 const FormDataUpdateContext = createContext<any>(null)
 
@@ -32,7 +22,7 @@ export const useUpdateFirstFormData = () => {
 }
 
 export function FormProvider ({children}:FormProviderProps) {
-    const [firstFormData, setFirstFormData] = useState<firstFormDataProps | {}>({})
+    const [firstFormData, setFirstFormData] = useState<firstFormDataProps>({} as firstFormDataProps)
 
     const updateFormData = (data:firstFormDataProps) =>{
         setFirstFormData(data)

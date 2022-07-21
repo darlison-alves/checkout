@@ -115,7 +115,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
 
       
       setAddress(response.data.logradouro)
-      setComplement(response.data.complemento)
+      // setComplement(response.data.complemento)
       setDistrict(response.data.bairro)
       setCity(response.data.localidade)
       setState(response.data.uf)
@@ -171,16 +171,14 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
     }
 
     try{
-     const userSignupInfo = await axios.post('https://api.ibigboss.link/api/auth/signup',{
-       headers: {'Content-Type': 'application/json'}, 
-       body:JSON.stringify(userInfo)
-     })
-     console.log(userSignupInfo)
+     const userSignupInfoResponse = await axios.post('https://api.ibigboss.link/api/auth/signup',userInfo)
+     console.log(userSignupInfoResponse)
     
-    //  const addressUserInfo = await api.post(`/address/${userId}/me`)
+    const addressUserInfoRespose = await api.post(`/address/${userSignupInfoResponse.data.user.id}/me`,addressInfo)
+    console.log(addressUserInfoRespose)
 
     console.log(dataFromForm)
-    updateFirstFormData(dataFromForm)
+    updateFirstFormData(userSignupInfoResponse.data.user.id)
     // nextStepForm()
     }catch(err:any){
       console.error(err.message)
@@ -193,7 +191,7 @@ const FirstStepForm = ({nextStepForm}:FirstStepFormProps) => {
   return (
     <>
     <img src={imgExample} className="max-w-full md:max-w-[830px] w-full mx-auto shadow-sm" alt="imagem do produto" />
-    <form onSubmit={goToNextStep} className="bg-white max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md">
+    <form onSubmit={goToNextStep} className="bg-white shadow-sm max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md">
       <section>
         <StepsTitle step="1" title="Dados pessoais" />
 

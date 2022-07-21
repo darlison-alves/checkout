@@ -11,6 +11,7 @@ import { useFirstFormData } from '../../context/FormContext';
 import { expiryOption, yearOption } from '../../utils/optionsData';
 import { useNavigate } from "react-router-dom";
 import imgExample from '../../assets/topo.png'
+import InputMask from "react-input-mask";
 
 const SecondStepForm = () => {
   const firstFormData = useFirstFormData()
@@ -23,6 +24,7 @@ const SecondStepForm = () => {
   const [expiry, setExpiry] = useState('')
   const [year, setYear] = useState('')
   const [cvv, setCvv] = useState('')
+  const [isAlreadyFocus, setIsAlreadyFocus] = useState<string[]>([])
 
   const navigate = useNavigate()
 
@@ -39,6 +41,7 @@ const SecondStepForm = () => {
     if(e.target.name === 'cvc'){
       setFocus('cvc')
     }
+    setIsAlreadyFocus(currState => [...currState, e.target.name])
   }
 
 
@@ -95,23 +98,23 @@ const SecondStepForm = () => {
     e.preventDefault()
     
     const data = {
-      cvv,
-      expiry,
-      name,
-      cardNumber,
-      cpf,
-      year,
-    }
-
-    const raw = {
-      ...data,
-      ...firstFormData
+      "clientId":firstFormData.id,
+      "card": {
+        "holder": name,
+        "cardNumber": cardNumber,
+        "expirationDate": `${expiry}/${year}`,
+        "securityCode": cvv,
+      }
     }
 
 
-    console.log(raw)
+    console.log(data)
 
     navigate('/obrigado',{replace:true})
+  }
+
+  const validateLabelHasToShow = (label:string) =>{
+    return isAlreadyFocus.find(item => item === label)
   }
 
   return (
@@ -128,7 +131,7 @@ const SecondStepForm = () => {
         <section className="grid md:grid-cols-2 gap-4 mt-5">
         <Cards
           cvc={cvv}
-          expiry={expiry+year}
+          expiry={expiry+year.slice(2,4)}
           focused={focus}
           name={name}
           number={cardNumber}
@@ -137,38 +140,40 @@ const SecondStepForm = () => {
         />
 
         <div>
-        <MaskedInput
-        hasIcon={true}
-        error={checkForErrors('card')}
-        icon={
-          <FaRegCreditCard
+        
+       
+        <div className='w-full relative mt-3'>
+        <FaRegCreditCard
             className="absolute top-[14px] left-[12px]"
             color="#92979A"
             size={20}
           />
-        }
-            mask="9999 9999 9999 9999"
-            placeholder='Número do Cartão'
-            onChange={getCardNumberValue}
-            onFocus={handleInputFocus}
-            name="number"
-            type="text"
-            value={cardNumber}
-            focusPlaceholder="Número do cartão"
+          <InputMask 
+          className="pr-3 pl-10 py-3 text-base font-semibold text-secondary border rounded-[4px] w-full placeholder:text-secondary placeholder:text-base focus:outline-none focus:ring-2  border-[#CED4DA] focus:ring-primary transition-colors"
+          placeholder="Número do cartão"
+          mask="9999 9999 9999 9999"
+          onChange={getCardNumberValue}
+          onFocus={handleInputFocus}
+          name="number"
+          type="text"
+          value={cardNumber}
           />
-
-          <div className="mt-3">
-          <Input
-            placeholder="NOME (Como escrito no Cartão)"
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            value={name}
-            onFocus={handleInputFocus}
-            name="name"
-            focusPlaceholder="Nome"
-          />
+          {validateLabelHasToShow('number') && <span className="text-primary text-xs absolute top-[-10px] px-2 bg-white transition left-5">Número do cartão</span>}
           </div>
 
+          <div className='w-full relative mt-3'>
+          <input 
+          className="transition-colors px-3 py-3 text-base font-semibold text-secondary border rounded-[4px] w-full placeholder:text-secondary placeholder:text-base focus:outline-none focus:ring-2 border-[#CED4DA] focus:ring-primary"
+          placeholder="NOME (Como escrito no Cartão)"
+          type="text"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          onFocus={handleInputFocus}
+          name="name"
+          />
+          {validateLabelHasToShow('name') && <span className="text-primary text-xs absolute top-[-10px] px-2 bg-white transition left-5">Nome</span>}
+          </div>
+          
           <div className="mt-3">
           <MaskedInput
             error={checkForErrors('cpf')}
@@ -201,22 +206,25 @@ const SecondStepForm = () => {
           <option value="Ano">Ano</option>
           {yearOption.map(year => {
             return (
-              <option key={year} value={year.slice(2,4)}>{year}</option>
+              <option key={year} value={year}>{year}</option>
             )
           })}
           </select>
           </div>
 
-          <Input
-            placeholder="CVV (3 ou 4 dígitos)"
-            type="text"
-            onChange={(e) => setCvv(e.target.value)}
-            value={cvv}
-            onFocus={handleInputFocus}
-            name="cvc"
-            focusPlaceholder="CVV"
+          <div className='w-full relative'>
+          <input 
+          className="transition-colors px-3 py-3 text-base font-semibold text-secondary border rounded-[4px] w-full placeholder:text-secondary placeholder:text-base focus:outline-none focus:ring-2 border-[#CED4DA] focus:ring-primary"
+          placeholder="CVV (3 ou 4 dígitos)"
+          type="text"
+          onChange={(e) => setCvv(e.target.value)}
+          value={cvv}
+          onFocus={handleInputFocus}
+          name="cvc"
           />
-
+          {validateLabelHasToShow('cvc') && <span className="text-primary text-xs absolute top-[-10px] px-2 bg-white transition left-5">CVC</span>}
+          </div>
+          
           </div>          
         
             <div className="w-full mt-3">
