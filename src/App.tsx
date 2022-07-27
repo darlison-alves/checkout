@@ -25,9 +25,6 @@ function App() {
         <Route path="/obrigado" element={<Thanks />}/>
   
       </Routes>
-
-
-
     </FormProvider>
   )
 }
