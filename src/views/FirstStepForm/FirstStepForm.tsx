@@ -158,13 +158,13 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
     setIsPending(true);
     try {
       const userSignupInfoResponse = await axios.post(
-        "https://api-stg.ibigboss.link/api/auth/signup",
+        "https://api.ibigboss.link/api/auth/signup",
         userInfo
       );
       console.log(userSignupInfoResponse);
 
       const addressUserInfoRespose = await api.post(
-        `https://api-stg.ibigboss.link/api/address/${userSignupInfoResponse.data.user.id}/me`,
+        `https://api.ibigboss.link/api/address/${userSignupInfoResponse.data.user.id}/me`,
         addressInfo
       );
       console.log(addressUserInfoRespose);

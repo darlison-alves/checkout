@@ -119,7 +119,7 @@ const SecondStepForm = () => {
       };
 
       const response = await axios.post(
-        "https://api-stg.ibigboss.link/api/payments/plan/pf",
+        "https://api.ibigboss.link/api/payments/plan/pf",
         data
       );
 
