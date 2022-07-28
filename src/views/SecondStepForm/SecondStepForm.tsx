@@ -146,7 +146,7 @@ const SecondStepForm = () => {
     <>
       <img
         src={imgExample}
-        className="max-w-full md:max-w-[830px] w-full mx-auto"
+        className="max-w-full md:max-w-[830px] w-full mx-auto h-[300px] object-cover"
         alt="imagem do produto"
       />
 

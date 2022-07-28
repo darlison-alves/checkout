@@ -141,8 +141,8 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
     let userInfo = {
       nome: `${firstName} ${lastName}`,
       email: email,
-      cpf: cpf,
-      telefone: phone,
+      cpf: cpf.replace(/[.-]/g, ''),
+      telefone: phone.replace(/[()-\s]/g, ''),
       planoId: id,
     };
 
@@ -187,7 +187,7 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
     <>
       <img
         src={imgExample}
-        className="max-w-full md:max-w-[830px] w-full mx-auto shadow-sm"
+        className="max-w-full md:max-w-[830px] w-full mx-auto shadow-sm h-[300px] object-cover"
         alt="imagem do produto"
       />
       <form
