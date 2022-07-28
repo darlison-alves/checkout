@@ -119,7 +119,7 @@ const SecondStepForm = () => {
       };
 
       const response = await axios.post(
-        "https://api-stg.ibigboss.link/api/payments/plan/pf",
+        "https://api.ibigboss.link/api/payments/plan/pf",
         data
       );
 
@@ -146,7 +146,7 @@ const SecondStepForm = () => {
     <>
       <img
         src={imgExample}
-        className="max-w-full md:max-w-[830px] w-full mx-auto"
+        className="max-w-full md:max-w-[830px] w-full mx-auto h-[300px] object-cover"
         alt="imagem do produto"
       />
 
