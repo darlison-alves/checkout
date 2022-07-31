@@ -149,11 +149,13 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
     console.log(userInfo);
 
     let addressInfo = {
+      cep:cep,
       logradouro: address,
       bairro: district,
       cidade: city,
       estado: state,
       codeIBGE: codeIBGE,
+      numero:number
     };
     setIsPending(true);
     try {
