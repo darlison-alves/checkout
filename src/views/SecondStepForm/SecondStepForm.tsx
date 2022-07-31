@@ -17,9 +17,6 @@ import Swal from "sweetalert2";
 const SecondStepForm = () => {
   const firstFormData = useFirstFormData();
 
-  useEffect(() => {
-    console.log(firstFormData);
-  }, []);
   const [isPending, setIsPending] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [focus, setFocus] = useState<Focused>("name");
