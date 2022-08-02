@@ -14,8 +14,9 @@ import { useUpdateFirstFormData } from "../../context/FormContext";
 import { statesOption } from "../../utils/optionsData";
 import imgExample from "../../assets/topo.png";
 import { useParams } from "react-router-dom";
-import { api } from "../../services/api";
+// import { api } from "../../services/api";
 import Swal from "sweetalert2";
+import { api } from "../../config/axios.base";
 
 const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
   //states for error
@@ -143,10 +144,10 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
       email: email,
       cpf: cpf.replace(/[.-]/g, ''),
       telefone: phone.replace(/[()-\s]/g, ''),
-      planoId: id,
+      planoId: id
     };
 
-    console.log(userInfo);
+    console.log("userInfo", userInfo);
 
     let addressInfo = {
       cep:cep,
@@ -159,14 +160,14 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
     };
     setIsPending(true);
     try {
-      const userSignupInfoResponse = await axios.post(
-        "https://api.ibigboss.link/api/auth/signup",
+      const userSignupInfoResponse = await api().post(
+        "/api/auth/signup",
         userInfo
       );
       console.log(userSignupInfoResponse);
 
-      const addressUserInfoRespose = await api.post(
-        `https://api.ibigboss.link/api/address/${userSignupInfoResponse.data.user.id}/me`,
+      const addressUserInfoRespose = await api().post(
+        `/api/address/${userSignupInfoResponse.data.user.id}/me`,
         addressInfo
       );
       console.log(addressUserInfoRespose);
@@ -174,14 +175,16 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
       updateFirstFormData(userSignupInfoResponse.data.user.id);
       nextStepForm();
     } catch (err: any) {
-      console.error(err.response.data.message);
+      console.error(err?.response?.data?.message);
       setIsPending(false);
       Swal.fire({
         title: "Alguma coisa deu errado :(",
-        text: err.response.data.message,
+        text: err?.response?.data?.message,
         icon: "error",
         confirmButtonText: "OK",
       });
+    } finally {
+      setIsPending(false);
     }
   };
 

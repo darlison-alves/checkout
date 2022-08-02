@@ -11,8 +11,9 @@ import { expiryOption, yearOption } from "../../utils/optionsData";
 import { useNavigate } from "react-router-dom";
 import imgExample from "../../assets/topo.png";
 import InputMask from "react-input-mask";
-import axios from "axios";
+
 import Swal from "sweetalert2";
+import { api } from "../../config/axios.base";
 
 const SecondStepForm = () => {
   const firstFormData = useFirstFormData();
@@ -115,8 +116,8 @@ const SecondStepForm = () => {
         },
       };
 
-      const response = await axios.post(
-        "https://api.ibigboss.link/api/payments/plan/pf",
+      const response = await api().post(
+        "/api/payments/plan/pf",
         data
       );
 
