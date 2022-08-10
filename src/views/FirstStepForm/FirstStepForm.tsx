@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StepsTitle } from "../../components/StepsTitle/StepsTitle";
 import { MdEmail } from "react-icons/md";
 import { BsFillHouseFill } from "react-icons/bs";
@@ -17,6 +17,10 @@ import { useParams } from "react-router-dom";
 // import { api } from "../../services/api";
 import Swal from "sweetalert2";
 import { api } from "../../config/axios.base";
+
+import compactoImag from '../../assets/plans/compacto.png';
+import { getBgColorByPlanId } from "../../config/utils.color";
+import { IPlan } from "../Subscription/payload.interface";
 
 const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
   //states for error
@@ -38,8 +42,20 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
   const [cpf, setCpf] = useState("");
   const [codeIBGE, setCodeIBGE] = useState("");
 
+  const [plan, setPlan] = useState<IPlan>({ id: 0, name: '', price: 0, tag: '' })
+
+  const [configStyle, setConfigStyle] = useState({ bg: '' })
+
   const updateFirstFormData = useUpdateFirstFormData();
   const { id } = useParams();
+
+  useEffect(() => {
+    api().get('/plans/' + id)
+      .then(res => {
+        setPlan(res.data)
+        setConfigStyle(getBgColorByPlanId(res.data.tag))
+      })
+  }, [])
 
   const checkForErrors = (error: string) => {
     return errors.find((err) => err === error) ? true : false;
@@ -150,24 +166,24 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
     console.log("userInfo", userInfo);
 
     let addressInfo = {
-      cep:cep,
+      cep: cep,
       logradouro: address,
       bairro: district,
       cidade: city,
       estado: state,
       codeIBGE: codeIBGE,
-      numero:number
+      numero: number
     };
     setIsPending(true);
     try {
       const userSignupInfoResponse = await api().post(
-        "/api/auth/signup",
+        "/auth/signup",
         userInfo
       );
       console.log(userSignupInfoResponse);
 
       const addressUserInfoRespose = await api().post(
-        `/api/address/${userSignupInfoResponse.data.user.id}/me`,
+        `/address/${userSignupInfoResponse.data.user.id}/me`,
         addressInfo
       );
       console.log(addressUserInfoRespose);
@@ -190,11 +206,18 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
 
   return (
     <>
-      <img
-        src={imgExample}
-        className="max-w-full md:max-w-[830px] w-full mx-auto shadow-sm h-[300px] object-cover"
-        alt="imagem do produto"
-      />
+      <div
+        className={`bg-${configStyle.bg} text-white text-4xl max-w-full md:max-w-[830px] w-full mx-auto shadow-sm h-[300px] object-cover`}
+      >
+        <h4 className="font-semibold p-10" >{plan.name.replace(' ', `\n`)}</h4>
+        <hr />
+        <div className="pl-10 pt-5 flex items-baseline text-white dark:text-white">
+          <hr />
+          <span className="text-1xl font-semibold">R$</span>
+          <span className="text-6xl font-extrabold tracking-tight">{plan.price.toFixed(2)}</span>
+          <span className="ml-1 text-xl font-normal text-white dark:text-white">/mês</span>
+        </div>
+      </div>
       <form
         onSubmit={goToNextStep}
         className="bg-white shadow-sm max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md"
@@ -345,11 +368,10 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
                   value={state}
                   onChange={getSelectValue}
                   className={`px-3 py-3 text-base font-semibold text-secondary border rounded-[4px] w-full placeholder:text-secondary transition-colors placeholder:text-base focus:outline-none focus:ring-2  
-          ${
-            checkForErrors("state")
-              ? "border-red-700 focus:ring-red-700"
-              : "border-[#CED4DA] focus:ring-primary"
-          }`}
+          ${checkForErrors("state")
+                      ? "border-red-700 focus:ring-red-700"
+                      : "border-[#CED4DA] focus:ring-primary"
+                    }`}
                 >
                   <option value="Estado">Estado</option>
                   {statesOption.map((state) => {

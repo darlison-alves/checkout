@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { MdEmail, MdPassword } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
+import { WarningAlert } from '../../components/Alerts/warning.alert';
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 import { Title } from '../../components/StepsTitle/StepsTitle';
 import { api } from '../../config/axios.base';
+import { login } from '../../services/auth';
 
 import { loginSchema } from './loginSchema';
 
@@ -13,12 +15,14 @@ const LoginForm = () => {
   const [errors, setErrors] = useState<(string | number)[]>([]);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [responseError, setResponseError] = useState("");
 
   const navigate = useNavigate()
 
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setLoading(true)
+    setResponseError("")
     const validated = loginSchema.validate(loginData)
 
     // setErrors(validated.error?.details)
@@ -29,14 +33,17 @@ const LoginForm = () => {
       setLoading(false)
     } else {
       setErrors([])
-      api().post("/auth/signin", validated.value)
+      api().post("/auth/signin", {
+        ...validated.value,
+        usernameOrEmail: validated.value.email
+      })
         .then(res => {
-          console.log('res', res.data);
+          login(res.data.accessToken)
+          navigate("/")
         }).catch(err => {
-          console.log('err', err)
+          setResponseError(err?.response?.data?.message)
         }).finally(() => {
           setLoading(false)
-          navigate("/checkout/2")
         })
     }
   }
@@ -69,7 +76,7 @@ const LoginForm = () => {
         <p className="text-base font-light my-3">
           Digite seus dados de login e senha!
         </p>
-
+        { responseError && <WarningAlert text="Usuário ou senha inválido" /> }
         <Input
           hasIcon={true}
           error={errors.find((err) => err === "email") ? true : false}

@@ -117,7 +117,7 @@ const SecondStepForm = () => {
       };
 
       const response = await api().post(
-        "/api/payments/plan/pf",
+        "/payments/plan/pf",
         data
       );
 
