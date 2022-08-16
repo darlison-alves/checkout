@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { StepsTitle } from "../../components/StepsTitle/StepsTitle";
 import { MdEmail } from "react-icons/md";
 import { BsFillHouseFill } from "react-icons/bs";
@@ -42,9 +42,11 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
   const [cpf, setCpf] = useState("");
   const [codeIBGE, setCodeIBGE] = useState("");
 
+  const [codigoIndicacao, setCodigoIndicacao] = useState("")
+
   const [plan, setPlan] = useState<IPlan>({ id: 0, name: '', price: 0, tag: '' })
 
-  const [configStyle, setConfigStyle] = useState({ bg: '' })
+  const [configStyle, setConfigStyle] = useState<CSSProperties>({})
 
   const updateFirstFormData = useUpdateFirstFormData();
   const { id } = useParams();
@@ -160,7 +162,8 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
       email: email,
       cpf: cpf.replace(/[.-]/g, ''),
       telefone: phone.replace(/[()-\s]/g, ''),
-      planoId: id
+      planoId: id,
+      codigoIndicacao
     };
 
     console.log("userInfo", userInfo);
@@ -180,13 +183,11 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
         "/auth/signup",
         userInfo
       );
-      console.log(userSignupInfoResponse);
 
       const addressUserInfoRespose = await api().post(
         `/address/${userSignupInfoResponse.data.user.id}/me`,
         addressInfo
       );
-      console.log(addressUserInfoRespose);
 
       updateFirstFormData(userSignupInfoResponse.data.user.id);
       nextStepForm();
@@ -207,7 +208,8 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
   return (
     <>
       <div
-        className={`bg-${configStyle.bg} text-white text-4xl max-w-full md:max-w-[830px] w-full mx-auto shadow-sm h-[300px] object-cover`}
+        style={configStyle}
+        className={`text-white text-4xl max-w-full md:max-w-[830px] w-full mx-auto shadow-sm h-[300px] object-cover`}
       >
         <h4 className="font-semibold p-10" >{plan.name.replace(' ', `\n`)}</h4>
         <hr />
@@ -288,7 +290,25 @@ const FirstStepForm = ({ nextStepForm }: FirstStepFormProps) => {
         </section>
 
         <section>
-          <StepsTitle step="2" title="Seu endereço" />
+          <StepsTitle step="2" title="Indicação" />
+
+          <p className="text-base font-light my-3">
+            Caso tenho código de Indicação informe aqui.
+          </p>
+          <div className="my-3">
+            <Input
+              required={false}
+              placeholder="Código Indicação"
+              type="text"
+              onChange={(e) => setCodigoIndicacao(e.target.value)}
+              value={codigoIndicacao}
+              focusPlaceholder="Código indicação"
+            />
+          </div>
+        </section>
+
+        <section>
+          <StepsTitle step="3" title="Seu endereço" />
 
           <p className="text-base font-light my-3">
             Digite o CEP para onde vamos enviar o seu pedido abaixo.

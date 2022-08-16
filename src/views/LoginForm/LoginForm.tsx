@@ -48,26 +48,6 @@ const LoginForm = () => {
     }
   }
 
-  // const getEmailInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (validateEmailInput(e.target.value)) {
-  //     setErrors((currState) => {
-  //       return currState.filter((err) => err !== "email");
-  //     });
-  //   } else {
-  //     setErrors((currState) => [...currState, "email"]);
-  //   }
-  //   setEmail(e.target.value);
-  // };
-
-  // const getPasswordInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (!e.target.value) {
-  //     setErrors((currState) => {
-  //       return currState.filter((err) => err !== "password");
-  //     });
-  //   }
-  //   setPassword(e.target.value);
-  // };
-
   return (
     <form name='login' onSubmit={onSubmit} className="bg-white shadow-sm max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md" >
       <section>

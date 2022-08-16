@@ -5,7 +5,7 @@ import { getToken } from "../services/auth";
 
 export const api = () => {
   const instanceAxios = axios.create({
-    baseURL: "https://api-stg.ibigboss.link/api",
+    baseURL: "http://localhost:5000/api",
     headers: {
       "Content-type": "application/json"
     }

@@ -6,11 +6,11 @@ interface IPagination {
 
 export const Pagination = ({ current = 1, totalPage = 10 }: IPagination) => {
 
-  const line = (page: number, active: string) => (
-    <li className={`page-item ${active}`}><a
-      className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-      href="#">{page}</a></li>
-  )
+  const line = (page: number, active: string) => {
+    // for (const iterator of object) {
+      
+    // }
+  }
 
   return (
     <div className="flex justify-center">
