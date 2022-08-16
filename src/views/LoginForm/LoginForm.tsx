@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { MdEmail, MdPassword } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
+import { WarningAlert } from '../../components/Alerts/warning.alert';
 import { Button } from '../../components/Button/Button';
 import { Input } from '../../components/Input/Input';
 import { Title } from '../../components/StepsTitle/StepsTitle';
 import { api } from '../../config/axios.base';
+import { login } from '../../services/auth';
 
 import { loginSchema } from './loginSchema';
 
@@ -13,12 +15,14 @@ const LoginForm = () => {
   const [errors, setErrors] = useState<(string | number)[]>([]);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [responseError, setResponseError] = useState("");
 
   const navigate = useNavigate()
 
   const onSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setLoading(true)
+    setResponseError("")
     const validated = loginSchema.validate(loginData)
 
     // setErrors(validated.error?.details)
@@ -29,37 +33,20 @@ const LoginForm = () => {
       setLoading(false)
     } else {
       setErrors([])
-      api().post("/auth/signin", validated.value)
+      api().post("/auth/signin", {
+        ...validated.value,
+        usernameOrEmail: validated.value.email
+      })
         .then(res => {
-          console.log('res', res.data);
+          login(res.data.accessToken)
+          navigate("/")
         }).catch(err => {
-          console.log('err', err)
+          setResponseError(err?.response?.data?.message)
         }).finally(() => {
           setLoading(false)
-          navigate("/checkout/2")
         })
     }
   }
-
-  // const getEmailInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (validateEmailInput(e.target.value)) {
-  //     setErrors((currState) => {
-  //       return currState.filter((err) => err !== "email");
-  //     });
-  //   } else {
-  //     setErrors((currState) => [...currState, "email"]);
-  //   }
-  //   setEmail(e.target.value);
-  // };
-
-  // const getPasswordInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (!e.target.value) {
-  //     setErrors((currState) => {
-  //       return currState.filter((err) => err !== "password");
-  //     });
-  //   }
-  //   setPassword(e.target.value);
-  // };
 
   return (
     <form name='login' onSubmit={onSubmit} className="bg-white shadow-sm max-w-full md:max-w-[830px] w-full mx-auto mb-10 p-5 overflow-x-hidden rounded-md" >
@@ -69,7 +56,7 @@ const LoginForm = () => {
         <p className="text-base font-light my-3">
           Digite seus dados de login e senha!
         </p>
-
+        { responseError && <WarningAlert text="Usuário ou senha inválido" /> }
         <Input
           hasIcon={true}
           error={errors.find((err) => err === "email") ? true : false}
