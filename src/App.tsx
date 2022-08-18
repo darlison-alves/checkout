@@ -16,20 +16,21 @@ import { PlanListPage } from './views/Subscription/ListPlans';
 import { ListRecommendationView } from './views/Recommendation/ListRecommendationView';
 import { ShareCodeRecommendationView } from './views/Recommendation/ShareCodeRecommendationView';
 import { ToastProvider } from './context/ToastContext';
+import { HeaderMenu } from './components/Header/HeaderMenu';
 
 const ProtectedRoute = ({ children }: any) => {
-  console.log('isAuthenticated()', isAuthenticated())
   if (!isAuthenticated()) return <Navigate to="/login" replace />
   return children
 }
 
 function App() {
-  const [isFirstStepForm, setIsFirstStepForm] = useState(true)
+  const [isFirstStepForm, setIsFirstStepForm] = useState(false)
 
 
   return (
     <FormProvider>
       <Header />
+      <HeaderMenu />
       <ToastProvider>
         <Routes>
           <Route path='/login' element={
