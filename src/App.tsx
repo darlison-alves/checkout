@@ -17,6 +17,8 @@ import { ListRecommendationView } from './views/Recommendation/ListRecommendatio
 import { ShareCodeRecommendationView } from './views/Recommendation/ShareCodeRecommendationView';
 import { ToastProvider } from './context/ToastContext';
 import { HeaderMenu } from './components/Header/HeaderMenu';
+import { IsLoggedProvider } from './context/IsLoggedContext';
+import { MySubscriptionView } from './views/Subscription/MySubscription';
 
 const ProtectedRoute = ({ children }: any) => {
   if (!isAuthenticated()) return <Navigate to="/login" replace />
@@ -24,67 +26,78 @@ const ProtectedRoute = ({ children }: any) => {
 }
 
 function App() {
-  const [isFirstStepForm, setIsFirstStepForm] = useState(false)
-
+  const [isFirstStepForm, setIsFirstStepForm] = useState(true)
 
   return (
     <FormProvider>
-      <Header />
-      <HeaderMenu />
-      <ToastProvider>
-        <Routes>
-          <Route path='/login' element={
-            <main className="App min-h-screen flex justify-center flex-col items-center bg-[#F5F5F5]">
-              <LoginForm />
-            </main>
-          } />
-          <Route path='/client/plans/:id' element={
-            <main className="App min-h-screen flex justify-center flex-col items-center bg-[#F5F5F5]">
-              {isFirstStepForm ? <FirstStepForm nextStepForm={() => setIsFirstStepForm(false)} /> : <SecondStepForm />}
-            </main>
-          } />
-          <Route path="/obrigado" element={<Thanks />} />
-
-          <Route path='/my-subscription/orders'
-            element={
-              <ProtectedRoute>
-                {/* <main className="App min-h-screen bg-[#F5F5F5]"> */}
-                <OrderSubscription />
-                {/* <Pagination /> */}
-                {/* </main> */}
-              </ProtectedRoute>
-            }
-          />
-
-          <Route path='/recommendations'
-            element={
-              <ProtectedRoute>
-                <ListRecommendationView />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route path='/share-indication-code'
-            element={
-              <ProtectedRoute>
-                <div className="App mt-0 flex justify-center flex-col items-center bg-[#F5F5F5]">
-                  <ShareCodeRecommendationView />
-                </div>
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path='/plans'
-            element={
-              <main className="App min-h-screen flex flex-col items-center bg-[#F5F5F5]">
-                <PlanListPage />
+      <IsLoggedProvider>
+        <Header />
+        <HeaderMenu />
+        <ToastProvider>
+          <Routes>
+            <Route path='/login' element={
+              // <main className="App min-h-screen flex justify-center flex-col items-center bg-[#F5F5F5]">
+                <LoginForm />
+              // </main>
+            } />
+            <Route path='/client/plans/:id' element={
+              <main className="App min-h-screen flex justify-center flex-col items-center bg-[#F5F5F5]">
+                {isFirstStepForm ? <FirstStepForm nextStepForm={() => setIsFirstStepForm(false)} /> : <SecondStepForm />}
               </main>
-            }
-          />
+            } />
+            <Route path="/obrigado" element={<Thanks />} />
 
-        </Routes>
-      </ToastProvider>
+            <Route path='/my-subscription/orders'
+              element={
+                <ProtectedRoute>
+                  {/* <main className="App min-h-screen bg-[#F5F5F5]"> */}
+                  <OrderSubscription />
+                  {/* <Pagination /> */}
+                  {/* </main> */}
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path='/recommendations'
+              element={
+                <ProtectedRoute>
+                  <ListRecommendationView />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path='/subscription/me'
+              element={
+                <ProtectedRoute>
+                  <main className=" App bg-[#F5F5F5]">
+                    <MySubscriptionView />
+                  </main>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path='/share-indication-code'
+              element={
+                <ProtectedRoute>
+                  <div className="App mt-0 flex justify-center flex-col items-center bg-[#F5F5F5]">
+                    <ShareCodeRecommendationView />
+                  </div>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path='/plans'
+              element={
+                <main className="App min-h-screen flex flex-col items-center bg-[#F5F5F5]">
+                  <PlanListPage />
+                </main>
+              }
+            />
+
+          </Routes>
+        </ToastProvider>
+      </IsLoggedProvider>
     </FormProvider>
   )
 }

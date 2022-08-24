@@ -1,15 +1,20 @@
 import { PropsWithChildren } from "react";
-import { isAuthenticated } from "../../services/auth";
 
-export const AuthNotShowedComponent = ({ children }: PropsWithChildren) => {
-  if(isAuthenticated()) return <div />
+export interface IPropsShowedComponent extends PropsWithChildren {
+  isLogged: boolean
+}
+
+export const AuthNotShowedComponent = ({ children, isLogged = false }:IPropsShowedComponent ) => {
+
+  if(isLogged) return <div />
   return (
     <>{ children }</>
   )
 }
 
-export const AuthShowedComponent = ({ children }: PropsWithChildren) => {
-  if(!isAuthenticated()) return <div />
+export const AuthShowedComponent = ({ children, isLogged }: IPropsShowedComponent) => {
+  
+  if(!isLogged) return <div />
   return (
     <>{ children }</>
   )

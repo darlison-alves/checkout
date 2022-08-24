@@ -1,5 +1,4 @@
-import { CSSProperties, MouseEventHandler, useEffect, useState } from "react";
-import { getBgColorByPlanId } from "../../config/utils.color";
+import { CSSProperties, MouseEventHandler } from "react";
 
 export interface IPlan {
   id: number;
@@ -12,7 +11,6 @@ export interface IPlan {
 }
 
 export const CardPlan = ({ name, price = 0, onClick = () => {}, style = {}}: IPlan) => {
-
   return (
     <div style={style} className={`p-4 max-w-sm rounded-lg border shadow-md sm:p-8 dark:border-gray-700 ml-2`}>
       <h5 className="mb-4 text-xl font-medium text-white dark:text-white">{ name }</h5>

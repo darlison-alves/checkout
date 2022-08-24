@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
+import { IsLoggedContext } from '../../context/IsLoggedContext';
+import { logout } from '../../services/auth';
 import { AuthNotShowedComponent, AuthShowedComponent } from '../Auth/Auth.Component';
 
 export const Header = () => {
 
   const [showMenu, setShowMenu] = useState(false)
+  const { isLogged, setIsLogged } = useContext(IsLoggedContext)
+
+  useEffect(() => {
+    console.log('isLogged', isLogged)
+  }, [isLogged])
 
   return (
     <div className="inherit bg-white">
@@ -47,12 +54,12 @@ export const Header = () => {
             </div> */}
           </nav>
           <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-            <AuthNotShowedComponent>
+            <AuthNotShowedComponent isLogged={isLogged} >
               <Link to={'/login'} className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"> Login </Link>
               <Link to={'/plans'} className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-primary hover:bg-primary-100"> Cadastrar </Link>
             </AuthNotShowedComponent>
 
-            <AuthShowedComponent>
+            <AuthShowedComponent isLogged={isLogged} >
               <div className="-mr-2 -my-2">
                 <button onClick={() => setShowMenu(!showMenu)} type="button" className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-expanded="false">
                   <span className="sr-only">Open menu</span>
@@ -64,9 +71,6 @@ export const Header = () => {
               </div>
             </AuthShowedComponent>
           </div>
-
-
-
         </div>
       </div>
 
@@ -88,7 +92,7 @@ export const Header = () => {
             </div>
             <div className="mt-6 " style={{ position: 'inherit' }}>
               <nav className="grid gap-y-8">
-                
+
                 <div className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50">
 
                   {/* <svg className="flex-shrink-0 h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -118,13 +122,26 @@ export const Header = () => {
 
               <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700"> Security </a>
             </div> */}
-            <div>
+
+            <AuthNotShowedComponent isLogged={isLogged} >
               <Link onClick={() => setShowMenu(false)} to={'/plans'} className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"> Cadastrar </Link>
               <p className="mt-6 text-center text-base font-medium text-gray-500">
                 Existe Conta?
                 <Link onClick={() => setShowMenu(false)} to="/Login" className="text-indigo-600 hover:text-indigo-500"> Login </Link>
               </p>
-            </div>
+            </AuthNotShowedComponent>
+
+            <AuthShowedComponent isLogged={isLogged} >
+              <p className="mt-6 text-center text-base font-medium text-gray-500">
+                Sair
+                <Link onClick={() => {
+                  logout()
+                  setShowMenu(false)
+                  setIsLogged(false)
+                }} to="/Login" className="text-indigo-600 hover:text-indigo-500"> Logout </Link>
+              </p>
+            </AuthShowedComponent>
+
           </div>
         </div>
       </div>
