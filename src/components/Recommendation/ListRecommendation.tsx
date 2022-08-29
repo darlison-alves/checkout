@@ -21,19 +21,19 @@ export const ListRecommendation = ({ recommendations }: RecommendationProps) => 
               {
                 recommendations?.map(recommendation => (
                   <tr className="border-b border-gray-200 hover:bg-gray-100">
+
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <div className="flex items-center">
-
-                        <span className="font-medium">{recommendation.nameIndicado}</span>
+                        <span className="font-medium">{recommendation.nomeIndicado}</span>
                       </div>
                     </td>
 
-                    <td className="py-3 px-6 text-center">
-                      <span className="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{recommendation.situacao}</span>
+                    <td className="py-3 px-6">
+                      <span className="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">{recommendation.situacao ? "Ativo": "Inativo"}</span>
                     </td>
 
-                    <td className="py-3 px-6 text-left">
-                      <div className="flex items-center">
+                    <td className="py-3 px-6">
+                      <div className="flex justify-center">
                         <span>{recommendation.date}</span>
                       </div>
                     </td>
