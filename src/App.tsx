@@ -19,6 +19,10 @@ import { ToastProvider } from './context/ToastContext';
 import { HeaderMenu } from './components/Header/HeaderMenu';
 import { IsLoggedProvider } from './context/IsLoggedContext';
 import { MySubscriptionView } from './views/Subscription/MySubscription';
+import { HeaderMenuAuth } from './components/Header/HeaderMenuAuth';
+import { ClientListView } from './views/ClientsList/ClientListView';
+import { ClientEditView } from './views/ClientsList/ClientEditView';
+import { CompanyListView } from './views/Company/CompanyListView';
 
 const ProtectedRoute = ({ children }: any) => {
   if (!isAuthenticated()) return <Navigate to="/login" replace />
@@ -32,12 +36,14 @@ function App() {
     <FormProvider>
       <IsLoggedProvider>
         <Header />
-        <HeaderMenu />
+
+        <HeaderMenuAuth />
+
         <ToastProvider>
           <Routes>
             <Route path='/login' element={
               // <main className="App min-h-screen flex justify-center flex-col items-center bg-[#F5F5F5]">
-                <LoginForm />
+              <LoginForm />
               // </main>
             } />
             <Route path='/client/plans/:id' element={
@@ -82,6 +88,36 @@ function App() {
                   <div className="App mt-0 flex justify-center flex-col items-center bg-[#F5F5F5]">
                     <ShareCodeRecommendationView />
                   </div>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path='/companies-admin'
+              element={
+                <ProtectedRoute>
+                  <main className="App bg-[#F5F5F5]">
+                    <CompanyListView />
+                  </main>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path='/clients'
+              element={
+                <ProtectedRoute>
+                  <main className="App bg-[#F5F5F5]">
+                    <ClientListView />
+                  </main>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path='/clients/new'
+              element={
+                <ProtectedRoute>
+                  <main className="App bg-[#F5F5F5]">
+                    <ClientEditView />
+                  </main>
                 </ProtectedRoute>
               }
             />

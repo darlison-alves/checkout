@@ -32,8 +32,8 @@ export const ChoosePaymentMethod = ({ onChange = (orderWay: OrderWayEnum) => {  
       <h3 className="mb-5 text-lg font-medium text-gray-900 dark:text-white">Qual Forma de Pagamento?</h3>
       <ul className="grid gap-6 w-full md:grid-cols-2">
         <li>
-          <input onChange={handleChange} type="radio" id={OrderWayEnum.CC} name="orderWay" value="hosting-small" className="hidden peer" required="" />
-            <label for={OrderWayEnum.CC} className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+          <input onChange={handleChange} type="radio" id={OrderWayEnum.CC} name="orderWay" value="hosting-small" className="hidden peer" />
+            <label htmlFor={OrderWayEnum.CC} className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
               <div className="block">
                 <div className="w-full text-lg font-semibold">Cartão Crédito</div>
                 <div className="w-full">Forma de recorrência Cartão de crédito</div>
@@ -43,7 +43,7 @@ export const ChoosePaymentMethod = ({ onChange = (orderWay: OrderWayEnum) => {  
         </li>
         <li>
           <input onChange={handleChange} type="radio" id={OrderWayEnum.BOL} name="orderWay" value="hosting-big" className="hidden peer" />
-            <label for={OrderWayEnum.BOL} className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+            <label htmlFor={OrderWayEnum.BOL} className="inline-flex justify-between items-center p-5 w-full text-gray-500 bg-white rounded-lg border border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
               <div className="block">
                 <div className="w-full text-lg font-semibold">Boleto Bancário</div>
                 <div className="w-full">Forma de recorrência boleto bancário</div>

@@ -4,37 +4,25 @@ import { IsLoggedContext } from "../../context/IsLoggedContext"
 import { AuthShowedComponent } from "../Auth/Auth.Component"
 
 const roles = [
-  "ROLE_USER"
+  "ROLE_ADMIN"
 ]
 
 const ItemMenu = [
   {
     name: 'Empresas',
-    to: '/companies'
+    to: '/companies-admin'
   },
   {
-    name: 'Meus Cupons',
-    to: '/my-coupons'
+    name: 'Cliente',
+    to: '/clients'
   },
   {
-    name: 'Extratos',
-    to: '/extracts'
-  },
-  {
-    name: 'indicados',
-    to: '/recommendations'
-  },
-  {
-    name: 'Compartilhar link',
-    to: '/share-indication-code'
-  },
-  {
-    name: 'Documentos',
-    to: '/documents'
+    name: 'Movimentações',
+    to: '/financial-transactions'
   }
 ]
 
-export const HeaderMenu = ({ profile }: any) => {
+export const HeaderMenuAdmin = ({ profile }: any) => {
 
   const navigate = useNavigate()
   const { pathname } = useLocation()
