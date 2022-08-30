@@ -22,7 +22,7 @@ export const CardPaymentForm = ({ onChange = (card: ICardInfo) => {} }) => {
     onChange({
       cardNumber,
       holder: name,
-      expirationDate: expiry,
+      expirationDate: `${expiry}/${year}`,
       securityCode: cvv
     })
   }, [cardNumber, name, expiry, year, cvv])
