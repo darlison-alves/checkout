@@ -3,6 +3,7 @@ import { addressView } from "../../utils/address.util"
 import { ButtonCustom } from "../Button/Button"
 import { Input } from "../Input/Input"
 import { LoadingFullLigth } from "../Loading/loading.full.compoment"
+import { ImageProfile } from "../Profile/Image.Profile"
 
 export const CompaniesTable = ({
   companies = [],
@@ -64,7 +65,7 @@ export const CompaniesTable = ({
               return (
                 <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <th scope="row" className="py-1 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {company?.logo}
+                    <ImageProfile />
                   </th>
                   <td className="py-4 px-6">
                     {company?.user?.name}

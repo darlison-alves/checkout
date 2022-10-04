@@ -8,6 +8,7 @@ interface InputProps {
   type: string
   onChange?: React.ChangeEventHandler<HTMLInputElement>
   onFocus?: React.FocusEventHandler<HTMLInputElement>
+  onBlur?: React.FocusEventHandler<HTMLInputElement>
   icon?: React.ReactNode
   error?:boolean
   focusPlaceholder?:string
@@ -20,6 +21,7 @@ export const Input = ({
   value,
   onChange,
   onFocus,
+  onBlur,
   icon,
   type,
   name,
@@ -38,6 +40,7 @@ export const Input = ({
       {hasIcon ? (
       <div className="relative w-full">
         <input
+          onBlur={onBlur}
           onChange={onChange}
           onFocus={handleFocus}
           name={name}

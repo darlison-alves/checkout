@@ -23,6 +23,8 @@ import { HeaderMenuAuth } from './components/Header/HeaderMenuAuth';
 import { ClientListView } from './views/ClientsList/ClientListView';
 import { ClientEditView } from './views/ClientsList/ClientEditView';
 import { CompanyListView } from './views/Company/CompanyListView';
+import { CompanyFormView } from './views/Company/CompanyFormView';
+import { RecoverPasswordForm } from './views/RecoverPassword/RecoverPasswordForm';
 
 const ProtectedRoute = ({ children }: any) => {
   if (!isAuthenticated()) return <Navigate to="/login" replace />
@@ -102,6 +104,16 @@ function App() {
               }
             />
 
+            <Route path='/companies-admin/add'
+              element={
+                <ProtectedRoute>
+                  <main className="App bg-[#F5F5F5]">
+                    <CompanyFormView />
+                  </main>
+                </ProtectedRoute>
+              }
+            />
+
             <Route path='/clients'
               element={
                 <ProtectedRoute>
@@ -128,6 +140,13 @@ function App() {
                 <main className="App min-h-screen flex flex-col items-center bg-[#F5F5F5]">
                   <PlanListPage />
                 </main>
+              }
+            />
+
+            <Route
+              path='/recover-password'
+              element={
+                <RecoverPasswordForm />
               }
             />
 

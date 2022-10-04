@@ -9,13 +9,14 @@ interface ButtonProps {
   text: string
   type: 'button' | 'submit' | 'reset'
   Icon?: IconType
+  hasIcon?: boolean
   className?: string
   disabled?: boolean
 }
-export const Button = ({ text, onClick, type, Icon = IoMdLock }: ButtonProps) => {
+export const Button = ({ text, onClick, type, Icon = IoMdLock, hasIcon = true }: ButtonProps) => {
   return (
     <button type={type} onClick={onClick} className="bg-primary text-white text-base font-normal py-3 w-full flex gap-3 items-center justify-center rounded-md">
-      <Icon />
+      { hasIcon && <Icon /> }
       {text}
     </button>
   )
