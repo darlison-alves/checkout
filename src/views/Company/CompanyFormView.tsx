@@ -1,7 +1,7 @@
-import { CompanyClientForm } from "../../components/Forms/CompanyClient.Form"
+import { CompanyPartnerForm } from "../../components/Forms/CompanyPartner.Form"
 
 export const CompanyFormView = () => {
   return (
-    <CompanyClientForm />
+    <CompanyPartnerForm />
   )
 }

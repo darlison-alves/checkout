@@ -5,14 +5,7 @@ import { Button } from "../Button/Button";
 import { Input } from "../Input/Input";
 import { MaskedInput } from "../InputMask/InputMask";
 import { StepsTitle } from "../StepsTitle/StepsTitle"
-import { CompanyBaseForm } from "./Company.Form"
-
-interface ICompanyForm {
-  razaoSocial: string;
-  cnpj: string;
-  nome: string;
-  categoriaEmpresa: Array<string>;
-}
+import { CompanyBaseForm, ICompanyForm } from "./Company.Form"
 
 export const CompanyClientForm = () => {
 
@@ -22,8 +15,10 @@ export const CompanyClientForm = () => {
     initialValues: {
       cnpj: "",
       razaoSocial: "",
-      nome: "",
-      categoriaEmpresa: []
+      user: {
+        nome: ""
+      },
+      categoriaEmpresa: 0
     },
     onSubmit: (values) => {
       console.log('values', values)
@@ -44,42 +39,11 @@ export const CompanyClientForm = () => {
           Digite os dados da empresa abaixo.
         </p>
 
-        <CompanyBaseForm handleChange={formik.handleChange} handleBlur={formik.handleBlur} values={formik.values} />
+        <CompanyBaseForm
+          categories={[]}
+          handleChange={formik.handleChange} 
+          handleBlur={formik.handleBlur} values={formik.values} />
 
-        {/* <>
-          <div className="grid md:grid-cols-2 grid-cols-1 my-4 gap-4">
-            <Input
-              name="razaoSocial"
-              placeholder="Razão Social"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.razaoSocial}
-              focusPlaceholder="Razão Social"
-            />
-
-            <Input
-              name="nome"
-              placeholder="Nome Fantasia"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.nome}
-              focusPlaceholder="Nome Fantasia"
-            />
-          </div>
-          <div className="grid md:grid-cols-2 grid-cols-1 my-4 gap-4">
-            <MaskedInput
-              name="cnpj"
-              error={false}
-              mask="99.999.999/9999-99"
-              placeholder="CNPJ"
-              onChange={formik.handleChange}
-              value={formik.values.cnpj}
-              type="text"
-              focusPlaceholder="CNPJ"
-            />
-          </div>
-        </> */}
       </section>
 
       <section className='my-3' >

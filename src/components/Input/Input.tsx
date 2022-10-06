@@ -3,7 +3,7 @@ import React, { useState } from "react";
 interface InputProps {
   hasIcon?: boolean
   placeholder: string
-  value?: string
+  value?: any
   name?:string
   type: string
   onChange?: React.ChangeEventHandler<HTMLInputElement>
