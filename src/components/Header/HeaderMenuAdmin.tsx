@@ -46,7 +46,7 @@ export const HeaderMenuAdmin = ({ profile }: any) => {
 
             if (pathname === item.to)
               return (
-                <li className="w-full">
+                <li key={item.to} className="w-full">
                   <Link to={item.to} className="inline-block p-4 w-full text-gray-900 bg-gray-100 rounded-l-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:bg-gray-700 dark:text-white" aria-current="page">{item.name}</Link>
                 </li>
               )

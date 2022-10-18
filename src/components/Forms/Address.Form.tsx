@@ -25,7 +25,6 @@ export const AddressForm = ({ errors = [], setErrors = (currState: string) => { 
   };
 
   useEffect(() => {
-    console.log('address', address)
     onChange(address)
   }, [address])
 
@@ -177,7 +176,7 @@ export const AddressForm = ({ errors = [], setErrors = (currState: string) => { 
               })}
             </select>
           </div>
-        </div>        
+        </div>
       )}
       </div>
   )

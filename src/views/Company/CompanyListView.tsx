@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { ButtonCustom } from "../../components/Button/Button"
 import { CompaniesTable } from "../../components/Tables/CompanyTable"
 import { CompanyService } from "../../services/company.service"
 
 export const CompanyListView = () => {
   const companyService = new CompanyService()
   const [companies, setCompanies] = useState([])
-  const [filters, setFilters] = useState({ page: 1, size: 10, name: '' })
+  const [filters, setFilters] = useState({ page: 1, size: 10, name: '', companyTypes: ["CLIENT", "PARTNER"] })
   const [pagination, setPagination] = useState({ page: 1, size: 10, total: 0 })
   const [loading, setLoading] = useState(false)
 
@@ -32,7 +31,7 @@ export const CompanyListView = () => {
         setFilters={setFilters}
         pagination={pagination}
         onEdit={(company: any) => {
-          navigate('/companies/register', { state: company })
+          navigate('/companies-admin/add', { state: company })
         }}
       />
     </div>

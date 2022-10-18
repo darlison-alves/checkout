@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { ClientsTable } from "../../components/Tables/ClientsTable"
+import { ClientTable } from "../../components/Tables/ClientTable"
 import { api } from "../../config/axios.base"
 
 export const ClientListView = () => {
@@ -32,7 +32,7 @@ export const ClientListView = () => {
   }, [filters])
 
   return (
-    <ClientsTable 
+    <ClientTable 
       loading={loading} 
       clients={clients} 
       setFilters={setFilters} 
