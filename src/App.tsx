@@ -25,8 +25,10 @@ import { ClientEditView } from './views/ClientsList/ClientEditView';
 import { CompanyListView } from './views/Company/CompanyListView';
 import { CompanyFormView } from './views/Company/CompanyFormView';
 import { RecoverPasswordForm } from './views/RecoverPassword/RecoverPasswordForm';
+import { BankDataView } from './views/BanckData/BankDataView';
 
 const ProtectedRoute = ({ children }: any) => {
+  console.log('protected')
   if (!isAuthenticated()) return <Navigate to="/login" replace />
   return children
 }
@@ -133,6 +135,17 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route path='/user/me'
+              element={
+                <ProtectedRoute>
+                  <main className="App bg-[#F5F5F5]">
+                    <BankDataView />
+                  </main>
+                </ProtectedRoute>
+              }
+            />
+
 
             <Route
               path='/plans'

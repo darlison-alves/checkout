@@ -16,9 +16,12 @@ export const CompanyClientForm = () => {
       cnpj: "",
       razaoSocial: "",
       user: {
-        nome: ""
+        name: "",
+        active: false,
+        email: ""
       },
-      categoriaEmpresa: 0
+      categoriaEmpresa: 0,
+      type: "CLIENT"
     },
     onSubmit: (values) => {
       console.log('values', values)

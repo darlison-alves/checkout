@@ -1,7 +1,11 @@
-import { CompanyPartnerForm } from "../../components/Forms/CompanyPartner.Form"
+import { useLocation } from "react-router-dom"
+import { CompanyPartnerFormView } from "./CompanyPartnerFormView"
 
 export const CompanyFormView = () => {
+
+  const { state } = useLocation()
+
   return (
-    <CompanyPartnerForm />
+    <CompanyPartnerFormView initialValues={state} />
   )
 }

@@ -176,7 +176,7 @@ export const AddressForm = ({ errors = [], setErrors = (currState: string) => { 
               })}
             </select>
           </div>
-        </div>        
+        </div>
       )}
       </div>
   )

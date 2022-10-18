@@ -1,5 +1,5 @@
-import React, { createContext, useState } from "react";
-import { SuccessSendToast, ToastAlert } from "../components/Toast/Success.toast";
+import { createContext, useState } from "react";
+import { ToastAlert } from "../components/Toast/Success.toast";
 import { ErrorEnum } from "../interfaces/enums/errors.enum";
 
 export const ToastContext = createContext({
