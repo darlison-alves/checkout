@@ -26,6 +26,8 @@ import { CompanyListView } from './views/Company/CompanyListView';
 import { CompanyFormView } from './views/Company/CompanyFormView';
 import { RecoverPasswordForm } from './views/RecoverPassword/RecoverPasswordForm';
 import { BankDataView } from './views/BanckData/BankDataView';
+import { ProfileView } from './views/Profile/ProfileView';
+import { CompanyPartnerListView } from './views/Company/CompanyPartnerListView';
 
 const ProtectedRoute = ({ children }: any) => {
   console.log('protected')
@@ -140,12 +142,31 @@ function App() {
               element={
                 <ProtectedRoute>
                   <main className="App bg-[#F5F5F5]">
+                    <ProfileView />
+                  </main>
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path='/user/bank-data/me'
+              element={
+                <ProtectedRoute>
+                  <main className="App bg-[#F5F5F5]">
                     <BankDataView />
                   </main>
                 </ProtectedRoute>
               }
             />
 
+            <Route path='/companies/partners'
+              element={
+                <ProtectedRoute>
+                  <main className="App bg-[#F5F5F5]">
+                    <CompanyPartnerListView />
+                  </main>
+                </ProtectedRoute>
+              }
+            />
 
             <Route
               path='/plans'

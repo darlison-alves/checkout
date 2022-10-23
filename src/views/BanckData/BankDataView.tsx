@@ -5,8 +5,6 @@ export const BankDataView = () => {
 
   const { user} = useGetInfoUser()
 
-  console.log('user',  user)
-
   return (
     <div className="mt-3">
       <BankDataForm

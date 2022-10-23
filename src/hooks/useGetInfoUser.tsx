@@ -7,13 +7,13 @@ export const useGetInfoUser = () => {
   const getMe = () => {
     setLoading(true)
     if (localStorage.getItem('@IBB_USER')) {
+      console.log('MEU')
       const userData: any = JSON.parse(localStorage.getItem('@IBB_USER') || "{}")
       setUser((old: any) => ({...old, ...userData }))
       setLoading(false)
     } else {
       api().get('/user/me')
         .then(res => {
-          console.log(res.data)
           setUser(res.data)
           localStorage.setItem('@IBB_USER', JSON.stringify(res.data))
         }).catch(err => {

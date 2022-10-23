@@ -3,7 +3,6 @@ import { initialDataCompany } from "../../utils/payloads.utils"
 import { ButtonCustom } from "../Button/Button"
 import { Input } from "../Input/Input"
 import { LoadingFullLigth } from "../Loading/loading.full.compoment"
-import { ImageProfile } from "../Profile/Image.Profile"
 
 export const ClientTable = ({
   clients = [],

@@ -25,6 +25,7 @@ export const Button = ({ text, onClick, type, Icon = IoMdLock, hasIcon = true }:
 }
 
 export const ButtonPrimary = ({ loaging = false, disabled = false, text, onClick, type, className = "" }: ButtonProps) => {
+  // [#f3c2a0]
   return (
     <button disabled={disabled || loaging} type={type} onClick={onClick} className={`${ loaging || disabled ? 'bg-[#f3c2a0]' : 'bg-primary' } py-2 w-[100px] ${className} ${disabled && "cursor-not-allowed" } text-white font-normal flex items-center justify-center rounded-md`}>
       { loaging && <AiOutlineLoading3Quarters className="animate-spin mr-3" /> }
@@ -35,7 +36,15 @@ export const ButtonPrimary = ({ loaging = false, disabled = false, text, onClick
 
 export const ButtonCustom = ({ disabled = false, text, onClick, type, className = "" }: ButtonProps) => {
   return (
-    <button disabled={disabled} type={type} onClick={onClick} className={`${className} ${disabled && "cursor-not-allowed" } text-white font-normal flex items-center justify-center rounded-md`}>
+    <button disabled={disabled} type={type} onClick={onClick} className={`${className} ${disabled && "bg-secondary cursor-not-allowed" } text-white font-normal flex items-center justify-center rounded-md`}>
+      {text}
+    </button>
+  )
+}
+
+export const ButtonBank = ({ disabled = false, text, onClick, type, className = "" }: ButtonProps) => {
+  return (
+    <button type={type} onClick={onClick} className={`${className} ${disabled && "bg-secondary" } text-white font-normal rounded-md`}>
       {text}
     </button>
   )
