@@ -3,6 +3,12 @@ interface IloadingFullComponent {
   description: string;
 }
 
+export const Loading = () => {
+  return (
+    <div className="border-t-transparent animate-spin rounded-full border-primary-light border-4 h-5 w-5"></div>
+  )
+}
+
 export const LoadingFullComponent = ({ text, description }: IloadingFullComponent) => {
   return (
     <div className="fixed w-full h-screen z-50 overflow-hidden bg-gray-700 opacity-75 flex flex-col items-center justify-center">

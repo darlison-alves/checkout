@@ -9,7 +9,7 @@ interface IInputCurrencyProps {
 export const InputCurrency = ({ setValue = () => { }, focusPlaceholder }: IInputCurrencyProps) => {
 
   useEffect(() => {
-    const element = document.getElementById("currency")
+    const element: any = document.getElementById("currency")
 
     if (element) {
       element.addEventListener("keyup", (value: any) => {

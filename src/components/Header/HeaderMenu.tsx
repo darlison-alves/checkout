@@ -10,7 +10,7 @@ const roles = [
 const ItemMenu = [
   {
     name: 'Empresas',
-    to: '/companies'
+    to: '/companies/partners'
   },
   {
     name: 'Meus Cupons',

@@ -7,7 +7,6 @@ export const useGetInfoUser = () => {
   const getMe = () => {
     setLoading(true)
     if (localStorage.getItem('@IBB_USER')) {
-      console.log('MEU')
       const userData: any = JSON.parse(localStorage.getItem('@IBB_USER') || "{}")
       setUser((old: any) => ({...old, ...userData }))
       setLoading(false)
@@ -17,7 +16,6 @@ export const useGetInfoUser = () => {
           setUser(res.data)
           localStorage.setItem('@IBB_USER', JSON.stringify(res.data))
         }).catch(err => {
-          // console.error(err)
         }).finally(() => {
           setLoading(false)
         })
@@ -25,7 +23,6 @@ export const useGetInfoUser = () => {
   }
 
   useEffect(() => {
-    console.log('dwdwd')
     getMe()
   }, [])
 
